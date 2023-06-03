@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\PC\\Pictures\\game\\AzMoga\\AzMoga\\AzMoga.csproj": {}
+    "C:\\Users\\PC\\Videos\\azmoga\\AzMoga\\AzMoga\\AzMoga.csproj": {}
   },
   "projects": {
-    "C:\\Users\\PC\\Pictures\\game\\AzMoga\\AzMoga\\AzMoga.csproj": {
+    "C:\\Users\\PC\\Videos\\azmoga\\AzMoga\\AzMoga\\AzMoga.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PC\\Pictures\\game\\AzMoga\\AzMoga\\AzMoga.csproj",
+        "projectUniqueName": "C:\\Users\\PC\\Videos\\azmoga\\AzMoga\\AzMoga\\AzMoga.csproj",
         "projectName": "AzMoga",
-        "projectPath": "C:\\Users\\PC\\Pictures\\game\\AzMoga\\AzMoga\\AzMoga.csproj",
+        "projectPath": "C:\\Users\\PC\\Videos\\azmoga\\AzMoga\\AzMoga\\AzMoga.csproj",
         "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PC\\Pictures\\game\\AzMoga\\AzMoga\\obj\\",
+        "outputPath": "C:\\Users\\PC\\Videos\\azmoga\\AzMoga\\AzMoga\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
