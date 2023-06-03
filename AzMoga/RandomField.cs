@@ -4,7 +4,7 @@ public class RandomField
 {
     private int width;
     private int height;
-    private string[,] field;
+    public string[,] field;
     private Random random;
 
     public RandomField(int width, int height)
