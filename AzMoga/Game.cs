@@ -11,5 +11,9 @@ namespace AzMoga
             RandomField field = new RandomField(width, height);
             field.GenerateAndRenderField();
         }
+        public void Movement()
+        {
+
+        }
     }
 }

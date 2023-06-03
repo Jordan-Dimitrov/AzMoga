@@ -30,7 +30,7 @@ public class RandomField
                 }
                 else
                 {
-                    int number = random.Next(10);
+                    int number = random.Next(1, Math.Max(width, height) * 2);
                     string operation = operations[random.Next(operations.Length)];
                     field[y, x] = operation + number.ToString();
                 }

@@ -63,11 +63,21 @@ namespace AzMoga
                 }
             }
         }
+        public bool DisableButtons(ConsoleKeyInfo keyInfo)
+        {
+            if (keyInfo.Key != ConsoleKey.Enter && keyInfo.Key != ConsoleKey.UpArrow && keyInfo.Key != ConsoleKey.DownArrow && keyInfo.Key != ConsoleKey.Escape)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public void MainMenu()
         {
             Console.SetCursorPosition(this.Left, this.Top);
             this.Position = 2;
-            Console.WriteLine(1);
             Console.WriteLine(this.GameName);
             int matrixHeight = this.GameName.Split('\n').Length;
             int centerLeft = this.Left + (this.GameName.Length / matrixHeight) / 2;
@@ -80,7 +90,12 @@ namespace AzMoga
             Console.SetCursorPosition(centerLeft, this.Top + 10);
             while (true)
             {
-                MenuPosition();
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                if (DisableButtons(key))
+                {
+                    continue;
+                }
+                MenuPosition(key);
                 if (this.Position == 0)
                 {
                     Console.SetCursorPosition(centerLeft - 1, this.Top + 14);
@@ -101,8 +116,8 @@ namespace AzMoga
         {
             while (true)
             {
-                ConsoleKey key = Console.ReadKey().Key;
-                if (key == ConsoleKey.Escape)
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.Escape)
                 {
                     Console.Clear();
                     MainMenu();
@@ -121,24 +136,23 @@ namespace AzMoga
             Console.WriteLine(1);
             IsEscPressed();
         }
-        public void MenuPosition()
+        public void MenuPosition(ConsoleKeyInfo key)
         {
-            ConsoleKey key = Console.ReadKey().Key;
-            if (key == ConsoleKey.UpArrow)
+            if (key.Key == ConsoleKey.UpArrow)
             {
                 if (this.Position != 2)
                 {
                     this.Position += 1;
                 }
             }
-            if (key == ConsoleKey.DownArrow)
+            if (key.Key == ConsoleKey.DownArrow)
             {
                 if (this.Position != 0)
                 {
                     this.Position -= 1;
                 }
             }
-            if (key == ConsoleKey.Enter)
+            if (key.Key == ConsoleKey.Enter)
             {
                 if (this.Position == 0)
                 {
@@ -159,17 +173,38 @@ namespace AzMoga
         }
         public void EnterCoordinates()
         {
-            Console.SetCursorPosition(this.Left, this.Top);
-            Console.WriteLine("Enter width: ");
-            Console.SetCursorPosition(this.Left + 12, this.Top);
-            int width = int.Parse(Console.ReadLine());
-            Console.SetCursorPosition(this.Left, this.Top+2);
-            Console.WriteLine("Enter height: ");
-            Console.SetCursorPosition(this.Left+13, this.Top+2);
-            int height = int.Parse(Console.ReadLine());
-            Console.Clear();
-            Game game = new Game();
-            game.Start(width, height);
+            while (true)
+            {
+                Console.SetCursorPosition(this.Left, this.Top);
+                Console.WriteLine("Enter width: ");
+                Console.SetCursorPosition(this.Left + 12, this.Top);
+                string widthInput = Console.ReadLine();
+                int width;
+                if (!int.TryParse(widthInput, out width))
+                {
+                    Console.Clear();
+                    continue;
+                }
+                Console.SetCursorPosition(this.Left, this.Top + 2);
+                Console.WriteLine("Enter height: ");
+                Console.SetCursorPosition(this.Left + 13, this.Top + 2);
+                string heightInput = Console.ReadLine();
+                int height;
+                if (!int.TryParse(heightInput, out height))
+                {
+                    Console.Clear();
+                    continue;
+                }
+                if (width<4&&height<4)
+                {
+                    Console.Clear();
+                    continue;
+                }
+                Console.Clear();
+                Game game = new Game();
+                game.Start(width, height);
+                break;
+            }
         }
     }
 }
