@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzMoga", "AzMoga\AzMoga.csproj", "{D954C506-D9E3-4276-AE21-227E98A35E7A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D954C506-D9E3-4276-AE21-227E98A35E7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D954C506-D9E3-4276-AE21-227E98A35E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D954C506-D9E3-4276-AE21-227E98A35E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D954C506-D9E3-4276-AE21-227E98A35E7A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D84B881A-4A81-4E82-B65B-DDB176BE30A6}
+	EndGlobalSection
+EndGlobal
