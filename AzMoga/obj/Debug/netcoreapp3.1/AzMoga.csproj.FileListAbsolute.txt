@@ -1,0 +1,14 @@
+C:\Users\PC\source\repos\AzMoga\AzMoga\bin\Debug\netcoreapp3.1\AzMoga.exe
+C:\Users\PC\source\repos\AzMoga\AzMoga\bin\Debug\netcoreapp3.1\AzMoga.deps.json
+C:\Users\PC\source\repos\AzMoga\AzMoga\bin\Debug\netcoreapp3.1\AzMoga.runtimeconfig.json
+C:\Users\PC\source\repos\AzMoga\AzMoga\bin\Debug\netcoreapp3.1\AzMoga.runtimeconfig.dev.json
+C:\Users\PC\source\repos\AzMoga\AzMoga\bin\Debug\netcoreapp3.1\AzMoga.dll
+C:\Users\PC\source\repos\AzMoga\AzMoga\bin\Debug\netcoreapp3.1\AzMoga.pdb
+C:\Users\PC\source\repos\AzMoga\AzMoga\obj\Debug\netcoreapp3.1\AzMoga.csproj.AssemblyReference.cache
+C:\Users\PC\source\repos\AzMoga\AzMoga\obj\Debug\netcoreapp3.1\AzMoga.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\source\repos\AzMoga\AzMoga\obj\Debug\netcoreapp3.1\AzMoga.AssemblyInfoInputs.cache
+C:\Users\PC\source\repos\AzMoga\AzMoga\obj\Debug\netcoreapp3.1\AzMoga.AssemblyInfo.cs
+C:\Users\PC\source\repos\AzMoga\AzMoga\obj\Debug\netcoreapp3.1\AzMoga.csproj.CoreCompileInputs.cache
+C:\Users\PC\source\repos\AzMoga\AzMoga\obj\Debug\netcoreapp3.1\AzMoga.dll
+C:\Users\PC\source\repos\AzMoga\AzMoga\obj\Debug\netcoreapp3.1\AzMoga.pdb
+C:\Users\PC\source\repos\AzMoga\AzMoga\obj\Debug\netcoreapp3.1\AzMoga.genruntimeconfig.cache
