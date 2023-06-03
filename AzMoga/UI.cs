@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
 namespace AzMoga
 {
@@ -28,7 +26,7 @@ namespace AzMoga
         public void EndScreen(int playerWon)
         {
             string endScreen = "";
-            if (playerWon==1)
+            if (playerWon == 1)
             {
                 endScreen = @"
                __________.__                               ____                         ._.
@@ -38,7 +36,7 @@ namespace AzMoga
                 |____|   |____(____  / ____|\___  >__|     |___|   \/\_/ \____/|___|  /  __
                                    \/\/         \/                                  \/   \/";
             }
-            else if (playerWon==2)
+            else if (playerWon == 2)
             {
                 endScreen = @"
                __________.__                              ________                          ._.
@@ -58,7 +56,7 @@ namespace AzMoga
             {
                 Console.SetCursorPosition(centerLeft * 2 - 5, this.Top + 10);
                 ConsoleKey key = Console.ReadKey().Key;
-                if (key==ConsoleKey.Enter)
+                if (key == ConsoleKey.Enter)
                 {
                     Console.Clear();
                     MainMenu();
@@ -73,11 +71,11 @@ namespace AzMoga
             Console.WriteLine(this.GameName);
             int matrixHeight = this.GameName.Split('\n').Length;
             int centerLeft = this.Left + (this.GameName.Length / matrixHeight) / 2;
-            Console.SetCursorPosition(centerLeft, this.Top+10);
+            Console.SetCursorPosition(centerLeft, this.Top + 10);
             Console.WriteLine("Start Game");
-            Console.SetCursorPosition(centerLeft+2, this.Top + 12);
+            Console.SetCursorPosition(centerLeft + 2, this.Top + 12);
             Console.WriteLine("Stats");
-            Console.SetCursorPosition(centerLeft-1, this.Top + 14);
+            Console.SetCursorPosition(centerLeft - 1, this.Top + 14);
             Console.WriteLine("Instructions");
             Console.SetCursorPosition(centerLeft, this.Top + 10);
             while (true)
@@ -85,15 +83,15 @@ namespace AzMoga
                 MenuPosition();
                 if (this.Position == 0)
                 {
-                    Console.SetCursorPosition(centerLeft-1, this.Top + 14);
-                    
+                    Console.SetCursorPosition(centerLeft - 1, this.Top + 14);
+
                 }
                 else if (this.Position == 1)
                 {
                     Console.SetCursorPosition(centerLeft + 2, this.Top + 12);
-                   
+
                 }
-                else if (this.Position==2)
+                else if (this.Position == 2)
                 {
                     Console.SetCursorPosition(centerLeft, this.Top + 10);
                 }
@@ -104,7 +102,7 @@ namespace AzMoga
             while (true)
             {
                 ConsoleKey key = Console.ReadKey().Key;
-                if (key==ConsoleKey.Escape)
+                if (key == ConsoleKey.Escape)
                 {
                     Console.Clear();
                     MainMenu();
@@ -154,7 +152,13 @@ namespace AzMoga
                 }
                 else if (this.Position == 2)
                 {
-                    
+                    Console.Clear();
+                    string input = Console.ReadLine();
+                    int x = int.Parse(input[0].ToString());
+                    int y = int.Parse(input[2].ToString());
+
+                    RandomField field = new RandomField(y, x);
+                    field.GenerateAndRenderField();
                 }
             }
         }
