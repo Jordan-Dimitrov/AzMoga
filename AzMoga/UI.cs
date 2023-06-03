@@ -153,14 +153,23 @@ namespace AzMoga
                 else if (this.Position == 2)
                 {
                     Console.Clear();
-                    string input = Console.ReadLine();
-                    int x = int.Parse(input[0].ToString());
-                    int y = int.Parse(input[2].ToString());
-
-                    RandomField field = new RandomField(y, x);
-                    field.GenerateAndRenderField();
+                    EnterCoordinates();
                 }
             }
+        }
+        public void EnterCoordinates()
+        {
+            Console.SetCursorPosition(this.Left, this.Top);
+            Console.WriteLine("Enter width: ");
+            Console.SetCursorPosition(this.Left + 12, this.Top);
+            int width = int.Parse(Console.ReadLine());
+            Console.SetCursorPosition(this.Left, this.Top+2);
+            Console.WriteLine("Enter height: ");
+            Console.SetCursorPosition(this.Left+13, this.Top+2);
+            int height = int.Parse(Console.ReadLine());
+            Console.Clear();
+            Game game = new Game();
+            game.Start(width, height);
         }
     }
 }
