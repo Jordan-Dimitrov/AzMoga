@@ -4,7 +4,7 @@ using System.Linq;
 using System.IO;
 namespace AzMoga
 {
-    class Game
+    class Game : Screen
     {
         private int Width;
         private int Height;
@@ -13,66 +13,68 @@ namespace AzMoga
         private Player _Player1, _Player2;
         private string[] _Forbidden;
 
-        public Game(int width, int height)
+        public Game()
+            : base(0, 0)
         {
-            this.Width = width;
-            this.Height = height;
+            this.Width = Globals.Width;
+            this.Height = Globals.Height;
             PlayerTurn = 0;
             _Player1 = new Player(0, 0, "P1", "V1");
-            _Player2 = new Player(width - 1, height - 1, "P2", "V2");
+            _Player2 = new Player(this.Width- 1, this.Height - 1, "P2", "V2");
             _Forbidden = new string[] { _Player1.Icon, _Player2.Icon, _Player1.VisitedIcon, _Player2.VisitedIcon };
         }
 
-        public void Start()
+        public override void Start()
         {
             RandomField field = new RandomField(this.Width, this.Height);
             field.GenerateAndRenderField();
+            _Player1.X = 0;
+            _Player1.Y = 0;
+
+            _Player2.X = this.Width - 1;
+            _Player2.Y = this.Height - 1;
             this.Field = field.field;
-            Update();
         }
 
-        public void Update()
+        public override void Update()
         {
-            while (true)
+            if (ValidMoveExits(PlayerTurn % 2 == 0 ? _Player1 : _Player2))
             {
-                if (ValidMoveExits(PlayerTurn == 1 ? _Player1 : _Player2))
+                string fileName = "scores.txt";
+                Console.Clear();
+                using (StreamWriter writer = new StreamWriter(fileName, true))
                 {
-                    string fileName = "scores.txt";
-                    UI ui = new UI(0, 0);
-                    Console.Clear();
-                    using (StreamWriter writer = new StreamWriter(fileName, true))
-                    {
-                        writer.WriteLine("Player1: " + _Player1.Score);
-                        writer.WriteLine("Player2: " + _Player2.Score);
-                    }
-
-                    if (_Player1.Score > _Player2.Score)
-                    {
-                        ui.EndScreen(1);
-                    }
-                    else if (_Player2.Score > _Player1.Score)
-                    {
-                        ui.EndScreen(2);
-                    }
-                    else 
-                    {
-                        ui.EndScreen(3);
-                    }
-                    return;
+                    writer.WriteLine("Player1: " + _Player1.Score);
+                    writer.WriteLine("Player2: " + _Player2.Score);
                 }
 
-                ConsoleKeyInfo key = Console.ReadKey(true);
-                if (IsKeyValid(key))
+                if (_Player1.Score > _Player2.Score)
                 {
-                    continue;
+                    Globals.PlayerWon = 1;
+                }
+                else if (_Player2.Score > _Player1.Score)
+                {
+                    Globals.PlayerWon = 2;
+                }
+                else 
+                {
+                    Globals.PlayerWon = 0;
                 }
 
-                if (Move(GetCurrentPlayer(), key))
-                    DrawGame();
+                ScreenManager.CurrentState = ScreenState.EndScreen;
+                return;
             }
+
+            ConsoleKeyInfo key = Console.ReadKey(true);
+            if (IsGameKeyValid(key))
+            {
+                return;
+            }
+
+            Move(GetCurrentPlayer(), key);
         }
 
-        public bool IsKeyValid(ConsoleKeyInfo keyInfo)
+        public bool IsGameKeyValid(ConsoleKeyInfo keyInfo)
         {
             if (keyInfo.Key != ConsoleKey.Q && keyInfo.Key != ConsoleKey.W && keyInfo.Key != ConsoleKey.E && keyInfo.Key != ConsoleKey.A && keyInfo.Key != ConsoleKey.S && keyInfo.Key != ConsoleKey.D && keyInfo.Key != ConsoleKey.Z && keyInfo.Key != ConsoleKey.C)
             {
@@ -84,19 +86,40 @@ namespace AzMoga
             }
         }
 
-        private void DrawGame() 
+        public override void Draw()
         {
             Console.Clear();
             for (int i = 0; i < this.Height; i++)
             {
                 for (int j = 0; j < this.Width; j++)
                 {
-                    Console.Write(this.Field[i, j] + " ");
+                    if (this.Field[i, j] == _Player1.Icon)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                    }
+                    else if (this.Field[i, j] == _Player1.VisitedIcon) 
+                    {
+                        Console.BackgroundColor = ConsoleColor.Red;
+                    }
+                    else if (this.Field[i, j] == _Player2.Icon)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                    }
+                    else if (this.Field[i, j] == _Player2.VisitedIcon) 
+                    {
+                        Console.BackgroundColor = ConsoleColor.Blue;
+                    }
+
+                    Console.Write(this.Field[i, j]);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.Write(' ');
                 }
                 Console.WriteLine();
             }
             Console.WriteLine("Player 1: " + _Player1.Score);
             Console.WriteLine("Player 2: " + _Player2.Score);
+            Console.WriteLine("Current Player: {0}", PlayerTurn % 2 == 0 ? "Player 1" : "Player 2");
         }
 
         public bool CheckIfOutside(int x, int y)

@@ -6,8 +6,8 @@ namespace AzMoga
     {
         static void Main(string[] args)
         {
-            UI ui = new UI(1, 1);
-            ui.MainMenu();
+            MathTricks mathTricks = new MathTricks();
+            mathTricks.Update();
         }
     }
 }

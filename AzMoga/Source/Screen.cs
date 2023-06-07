@@ -26,14 +26,13 @@ namespace AzMoga
         {
             if (keyInfo.Key != ConsoleKey.Enter && keyInfo.Key != ConsoleKey.UpArrow && keyInfo.Key != ConsoleKey.DownArrow && keyInfo.Key != ConsoleKey.Escape)
             {
-                return true;
-            }
-            else
-            {
                 return false;
             }
+
+            return true;
         }
 
+        public virtual void Start() { }
         public abstract void Draw();
         public abstract void Update();
 
@@ -42,21 +41,32 @@ namespace AzMoga
 
     static class ScreenManager
     {
+        public static void Init() 
+        {
+            _Screens = new Dictionary<ScreenState, Screen>();
+        }
+
         public static void AddScreen(ScreenState state, Screen screen)
         {
             _Screens.Add(state, screen);
         }
 
-        public static void Update() 
+        public static void UpdateCurrentScreen() 
         {
-            if (_Screens.ContainsKey(CurrentState))
-                _Screens[CurrentState].Update();
+            if (_Screens.ContainsKey(_CurrentState))
+                _Screens[_CurrentState].Update();
         }
 
-        public static void Draw()
+        public static void DrawCurrentScreen()
         {
-            if (_Screens.ContainsKey(CurrentState))
-                _Screens[CurrentState].Draw();
+            if (_Screens.ContainsKey(_CurrentState))
+                _Screens[_CurrentState].Draw();
+        }
+
+        private static void StartCurrentScreen() 
+        {
+            if (_Screens.ContainsKey(_CurrentState))
+                _Screens[_CurrentState].Start();
         }
 
         public static ScreenState CurrentState 
@@ -68,7 +78,8 @@ namespace AzMoga
             set 
             {
                 _CurrentState = value;
-                Console.Clear() ;
+                Console.Clear();
+                StartCurrentScreen();
             }
         }
 

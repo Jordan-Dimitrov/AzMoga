@@ -9,31 +9,22 @@ namespace AzMoga
         public MainMenu(int left, int top) 
             : base(left, top)
         {
-            _GameName = @" 
-             __  __       _   _  _______   _      _        
-            |  \/  |     | | | ||__   __| (_)    | |       
-            | \  / | __ _| |_| |__ | |_ __ _  ___| | _____ 
-            | |\/| |/ _` | __| '_ \| | '__| |/ __| |/ / __|
-            | |  | | (_| | |_| | | | | |  | | (__|   <\__ \
-            |_|  |_|\__,_|\__|_| |_|_|_|  |_|\___|_|\_\___/";
-
-            _Position = 2;
+            _Position = 0;
         }
 
         public override void Draw()
         {
             Console.SetCursorPosition(_Left, _Top);
-            _Position = 2;
-            Console.WriteLine(_GameName);
-            int matrixHeight = _GameName.Split('\n').Length;
-            _CenterLeft = _Left + (_GameName.Length / matrixHeight) / 2;
-            Console.SetCursorPosition(_CenterLeft, _Top + 10);
-            Console.WriteLine("Start Game");
-            Console.SetCursorPosition(_CenterLeft + 2, _Top + 12);
-            Console.WriteLine("Stats");
-            Console.SetCursorPosition(_CenterLeft - 1, _Top + 14);
-            Console.WriteLine("Instructions");
-            Console.SetCursorPosition(_CenterLeft, _Top + 10);
+            Console.WriteLine(Globals.GameName);
+            int matrixHeight = Globals.GameName.Split('\n').Length;
+            _CenterLeft = _Left + (Globals.GameName.Length / matrixHeight) / 2;
+            for (int i = 0; i < _SettingNames.Length; i++)
+            {
+                Console.SetCursorPosition(_CenterLeft + _SettingsXOffset[i], _Top + (10 + (i * 2)));
+                Console.WriteLine(_SettingNames[i]);
+            }
+
+            Console.SetCursorPosition(_CenterLeft + _SettingsXOffset[_Position], _Top + (10 + (_Position * 2)));
         }
 
         public override void Update()
@@ -41,66 +32,60 @@ namespace AzMoga
             while (true)
             {
                 ConsoleKeyInfo key = Console.ReadKey(true);
-                if (IsKeyValid(key))
+                if (!IsKeyValid(key))
                 {
                     continue;
                 }
-                MenuPosition(key);
-                if (_Position == 0)
-                {
-                    Console.SetCursorPosition(_CenterLeft - 1, _Top + 14);
+                if (IsOptionChosen(key))
+                    break;
 
-                }
-                else if (_Position == 1)
-                {
-                    Console.SetCursorPosition(_CenterLeft + 2, _Top + 12);
-
-                }
-                else if (_Position == 2)
-                {
-                    Console.SetCursorPosition(_CenterLeft, _Top + 10);
-                }
+                Console.SetCursorPosition(_CenterLeft + _SettingsXOffset[_Position], _Top + (10 + (_Position * 2)));
             }
         }
 
-        public void MenuPosition(ConsoleKeyInfo key)
+        public bool IsOptionChosen(ConsoleKeyInfo key)
         {
             if (key.Key == ConsoleKey.UpArrow)
             {
-                if (_Position != 2)
-                {
-                    _Position += 1;
-                }
+                _Position--;
             }
-            if (key.Key == ConsoleKey.DownArrow)
+            else if (key.Key == ConsoleKey.DownArrow)
             {
-                if (_Position != 0)
-                {
-                    _Position -= 1;
-                }
+                _Position++;
             }
+
+            _Position = _Position % 3;
+            if (_Position < 0)
+            {
+                _Position = 3 + _Position;
+            }
+
             if (key.Key == ConsoleKey.Enter)
             {
                 if (_Position == 0)
                 {
-                    Console.Clear();
-                    ScreenManager.CurrentState = ScreenState.Instructions;
+                    ScreenManager.CurrentState = ScreenState.GameSettings;
+                    return true;
                 }
                 else if (_Position == 1)
                 {
-                    Console.Clear();
                     ScreenManager.CurrentState = ScreenState.Stats;
+                    return true;
                 }
                 else if (_Position == 2)
                 {
-                    Console.Clear();
-                    ScreenManager.CurrentState = ScreenState.GameSettings;
+                    ScreenManager.CurrentState = ScreenState.Instructions;
+                    return true;
                 }
             }
+
+            return false;
         }
 
         private int _Position;
         private string _GameName;
         private int _CenterLeft;
+        private int[] _SettingsXOffset = { 0, 2, -1 };
+        private string[] _SettingNames = { "Start Game", "Stats", "Instructions" };
     }
 }

@@ -6,15 +6,15 @@ namespace AzMoga
 {
     class EndScreen : Screen
     {
-        public EndScreen(int left, int top) 
-            : base(left, top)
+        public EndScreen() 
+            : base(0, 0)
         {
         }
 
         public override void Draw()
         {
             string endScreen = "";
-            if (playerWon == 1)
+            if (Globals.PlayerWon == 1)
             {
                 endScreen = @"
                __________.__                               ____                         ._.
@@ -24,7 +24,7 @@ namespace AzMoga
                 |____|   |____(____  / ____|\___  >__|     |___|   \/\_/ \____/|___|  /  __
                                    \/\/         \/                                  \/   \/";
             }
-            else if (playerWon == 2)
+            else if (Globals.PlayerWon == 2)
             {
                 endScreen = @"
                __________.__                              ________                          ._.
@@ -37,36 +37,37 @@ namespace AzMoga
             else
             {
                 endScreen = @"
-                ________                          ._.
-                \______ \ _______ _____  __  _  __| |
-                 |    |  \\_  __ \\__  \ \ \/ \/ /| |
-                 |    `   \|  | \/ / __ \_\     /  \|
-                /_______  /|__|   (____  / \/\_/   __
-                        \/             \/          \/";
+              ________                          ._.
+              \______ \ _______ _____  __  _  __| |
+               |    |  \\_  __ \\__  \ \ \/ \/ /| |
+               |    `   \|  | \/ / __ \_\     /  \|
+              /_______  /|__|   (____  / \/\_/   __
+                      \/             \/          \/";
             }
             Console.WriteLine(endScreen);
             Console.SetCursorPosition(_Left, _Top);
             int matrixHeight = endScreen.Split('\n').Length;
-            centerLeft = _Left  / 2;
-            Console.SetCursorPosition(centerLeft * 2 - 5, _Top + 10);
+            string[] matrixLines = endScreen.Split('\n');
+            string centerLine = matrixLines[matrixHeight / 2];
+            string newGame = "New Game";
+            //int len = centerLine.Length / 2;
+            centerLeft = _Left + ((centerLine.Length / 2) - (newGame.Length / 2));
+            Console.SetCursorPosition(centerLeft, _Top + 10);
             Console.WriteLine("New Game");
-            
         }
 
         public override void Update()
         {
-            while (true)
+            Console.SetCursorPosition(centerLeft, _Top + 10);
+            ConsoleKeyInfo key = Console.ReadKey(true);
+            if (!IsKeyValid(key))
             {
-                Console.SetCursorPosition(centerLeft * 2 - 5, _Top + 10);
-                ConsoleKeyInfo key = Console.ReadKey(true);
-                if (!IsKeyValid(key))
-                {
-                    continue;
-                }
-                if (key.Key == ConsoleKey.Enter)
-                {
-                    ScreenManager.CurrentState = ScreenState.MainMenu;
-                }
+                return;
+            }
+
+            if (key.Key == ConsoleKey.Enter)
+            {
+                ScreenManager.CurrentState = ScreenState.MainMenu;
             }
         }
 
