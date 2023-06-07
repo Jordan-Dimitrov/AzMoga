@@ -9,58 +9,52 @@ namespace AzMoga
         public EndScreen() 
             : base(0, 0)
         {
-        }
-
-        public override void Draw()
-        {
-            string endScreen = "";
-            if (Globals.PlayerWon == 1)
+            _EndScreenTexts = new string[] 
             {
-                endScreen = @"
+                 @"
+               ________                          ._.
+               \______ \ _______ _____  __  _  __| |
+                |    |  \\_  __ \\__  \ \ \/ \/ /| |
+                |    `   \|  | \/ / __ \_\     /  \|
+               /_______  /|__|   (____  / \/\_/   __
+                       \/             \/          \/",
+
+                @"
                __________.__                               ____                         ._.
                \______   \  | _____  ___.__. ___________  /_   | __  _  ______   ____   | |
                 |     ___/  | \__  \<   |  |/ __ \_  __ \  |   | \ \/ \/ /  _ \ /    \  | |
                 |    |   |  |__/ __ \\___  \  ___/|  | \/  |   |  \     (  <_> )   |  \  \|
                 |____|   |____(____  / ____|\___  >__|     |___|   \/\_/ \____/|___|  /  __
-                                   \/\/         \/                                  \/   \/";
-            }
-            else if (Globals.PlayerWon == 2)
-            {
-                endScreen = @"
+                                   \/\/         \/                                  \/   \/",
+
+                @"
                __________.__                              ________                          ._.
                \______   \  | _____  ___.__. ___________  \_____  \  __  _  ______   ____   | |
                 |     ___/  | \__  \<   |  |/ __ \_  __ \  /  ____/  \ \/ \/ /  _ \ /    \  | |
                 |    |   |  |__/ __ \\___  \  ___/|  | \/ /       \   \     (  <_> )   |  \  \|
                 |____|   |____(____  / ____|\___  >__|    \_______ \   \/\_/ \____/|___|  /  __
-                                   \/\/         \/                \/                    \/   \/";
-            }
-            else
-            {
-                endScreen = @"
-              ________                          ._.
-              \______ \ _______ _____  __  _  __| |
-               |    |  \\_  __ \\__  \ \ \/ \/ /| |
-               |    `   \|  | \/ / __ \_\     /  \|
-              /_______  /|__|   (____  / \/\_/   __
-                      \/             \/          \/";
-            }
-            Console.WriteLine(endScreen);
+                                   \/\/         \/                \/                    \/   \/"
+            };
+        }
+
+        public override void Draw()
+        {
+            string endScreenText = _EndScreenTexts[Globals.PlayerWon];
+            Console.WriteLine(endScreenText);
             Console.SetCursorPosition(_Left, _Top);
-            int matrixHeight = endScreen.Split('\n').Length;
-            string[] matrixLines = endScreen.Split('\n');
+            int matrixHeight = endScreenText.Split('\n').Length;
+            string[] matrixLines = endScreenText.Split('\n');
             string centerLine = matrixLines[matrixHeight / 2];
-            string newGame = "New Game";
-            //int len = centerLine.Length / 2;
-            centerLeft = _Left + ((centerLine.Length / 2) - (newGame.Length / 2));
-            Console.SetCursorPosition(centerLeft, _Top + 10);
+            _CenterLeft = _Left + (centerLine.Length / 2);
+            Console.SetCursorPosition(_CenterLeft, _Top + 10);
             Console.WriteLine("New Game");
         }
 
         public override void Update()
         {
-            Console.SetCursorPosition(centerLeft, _Top + 10);
+            Console.SetCursorPosition(_CenterLeft, _Top + 10);
             ConsoleKeyInfo key = Console.ReadKey(true);
-            if (!IsKeyValid(key))
+            if (!Utils.IsUIKeyValid(key))
             {
                 return;
             }
@@ -71,6 +65,7 @@ namespace AzMoga
             }
         }
 
-        private int centerLeft = 0;
+        private int _CenterLeft = 0;
+        private string[] _EndScreenTexts;
     }
 }

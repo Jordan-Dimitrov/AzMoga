@@ -9,15 +9,24 @@ namespace AzMoga
         public MainMenu(int left, int top) 
             : base(left, top)
         {
-            _Position = 0;
+            _GameName = @" 
+             __  __       _   _  _______   _      _        
+            |  \/  |     | | | ||__   __| (_)    | |       
+            | \  / | __ _| |_| |__ | |_ __ _  ___| | _____ 
+            | |\/| |/ _` | __| '_ \| | '__| |/ __| |/ / __|
+            | |  | | (_| | |_| | | | | |  | | (__|   <\__ \
+            |_|  |_|\__,_|\__|_| |_|_|_|  |_|\___|_|\_\___/";
+
+
+        _Position = 0;
         }
 
         public override void Draw()
         {
             Console.SetCursorPosition(_Left, _Top);
-            Console.WriteLine(Globals.GameName);
-            int matrixHeight = Globals.GameName.Split('\n').Length;
-            _CenterLeft = _Left + (Globals.GameName.Length / matrixHeight) / 2;
+            Console.WriteLine(_GameName);
+            int matrixHeight = _GameName.Split('\n').Length;
+            _CenterLeft = _Left + (_GameName.Length / matrixHeight) / 2;
             for (int i = 0; i < _SettingNames.Length; i++)
             {
                 Console.SetCursorPosition(_CenterLeft + _SettingsXOffset[i], _Top + (10 + (i * 2)));
@@ -32,12 +41,15 @@ namespace AzMoga
             while (true)
             {
                 ConsoleKeyInfo key = Console.ReadKey(true);
-                if (!IsKeyValid(key))
+                if (!Utils.IsUIKeyValid(key))
                 {
                     continue;
                 }
-                if (IsOptionChosen(key))
+
+                if (IsOptionChosen(key)) 
+                {
                     break;
+                }
 
                 Console.SetCursorPosition(_CenterLeft + _SettingsXOffset[_Position], _Top + (10 + (_Position * 2)));
             }

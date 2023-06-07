@@ -114,3 +114,11 @@ Player1: 0
 Player2: 6
 Player1: 3
 Player2: 0
+Player1: 8
+Player2: -6
+Player1: -7
+Player2: 1
+Player1: -4
+Player2: 0
+Player1: 0
+Player2: -6

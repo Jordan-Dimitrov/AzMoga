@@ -22,16 +22,6 @@ namespace AzMoga
             _Top = top;
         }
 
-        protected bool IsKeyValid(ConsoleKeyInfo keyInfo)
-        {
-            if (keyInfo.Key != ConsoleKey.Enter && keyInfo.Key != ConsoleKey.UpArrow && keyInfo.Key != ConsoleKey.DownArrow && keyInfo.Key != ConsoleKey.Escape)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         public virtual void Start() { }
         public abstract void Draw();
         public abstract void Update();

@@ -19,8 +19,8 @@ namespace AzMoga
             this.Width = Globals.Width;
             this.Height = Globals.Height;
             PlayerTurn = 0;
-            _Player1 = new Player(0, 0, "P1", "V1");
-            _Player2 = new Player(this.Width- 1, this.Height - 1, "P2", "V2");
+            _Player1 = new Player(0, 0, "P1", "V1", ConsoleColor.Red);
+            _Player2 = new Player(this.Width- 1, this.Height - 1, "P2", "V2", ConsoleColor.Blue);
             _Forbidden = new string[] { _Player1.Icon, _Player2.Icon, _Player1.VisitedIcon, _Player2.VisitedIcon };
         }
 
@@ -34,6 +34,19 @@ namespace AzMoga
             _Player2.X = this.Width - 1;
             _Player2.Y = this.Height - 1;
             this.Field = field.field;
+        }
+
+        private void SetPlayerColor(string currentPlayerChar, Player player) 
+        {
+            if (currentPlayerChar == player.Icon)
+            {
+                Console.ForegroundColor = player.Color;
+            }
+            else if (currentPlayerChar == player.VisitedIcon)
+            {
+                Console.BackgroundColor = player.Color;
+            }
+
         }
 
         public override void Update()
@@ -66,7 +79,7 @@ namespace AzMoga
             }
 
             ConsoleKeyInfo key = Console.ReadKey(true);
-            if (IsGameKeyValid(key))
+            if (!IsGameKeyValid(key))
             {
                 return;
             }
@@ -78,11 +91,11 @@ namespace AzMoga
         {
             if (keyInfo.Key != ConsoleKey.Q && keyInfo.Key != ConsoleKey.W && keyInfo.Key != ConsoleKey.E && keyInfo.Key != ConsoleKey.A && keyInfo.Key != ConsoleKey.S && keyInfo.Key != ConsoleKey.D && keyInfo.Key != ConsoleKey.Z && keyInfo.Key != ConsoleKey.C)
             {
-                return true;
+                return false;
             }
             else
             {
-                return false;
+                return true;
             }
         }
 
@@ -93,22 +106,8 @@ namespace AzMoga
             {
                 for (int j = 0; j < this.Width; j++)
                 {
-                    if (this.Field[i, j] == _Player1.Icon)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                    }
-                    else if (this.Field[i, j] == _Player1.VisitedIcon) 
-                    {
-                        Console.BackgroundColor = ConsoleColor.Red;
-                    }
-                    else if (this.Field[i, j] == _Player2.Icon)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                    }
-                    else if (this.Field[i, j] == _Player2.VisitedIcon) 
-                    {
-                        Console.BackgroundColor = ConsoleColor.Blue;
-                    }
+                    SetPlayerColor(this.Field[i, j], _Player1);
+                    SetPlayerColor(this.Field[i, j], _Player2);
 
                     Console.Write(this.Field[i, j]);
                     Console.ForegroundColor = ConsoleColor.White;
